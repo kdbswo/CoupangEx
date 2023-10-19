@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
@@ -68,11 +69,17 @@ fun CoupangEx() {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        Column {
+
+        val scrollState = rememberScrollState()
+
+        Column(
+            modifier = Modifier.verticalScroll(scrollState)
+        ) {
             TopLogoArea()
             TopSearchBarArea()
             TopBanner()
             CategoryList()
+            CenterBannerArea()
         }
     }
 }
@@ -222,6 +229,24 @@ fun CategoryList() {
 
     }
 
+}
+
+@Composable
+fun CenterBannerArea() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(500.dp)
+            .padding(20.dp)
+            .background(Color.LightGray),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "배너영역",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.ExtraBold
+        )
+    }
 }
 
 @Preview(showBackground = true)
