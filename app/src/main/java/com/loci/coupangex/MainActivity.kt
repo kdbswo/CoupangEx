@@ -1,19 +1,28 @@
 package com.loci.coupangex
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,6 +56,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoupangExTheme {
                 CoupangEx()
+
             }
         }
     }
@@ -62,6 +72,7 @@ fun CoupangEx() {
             TopLogoArea()
             TopSearchBarArea()
             TopBanner()
+            CategoryList()
         }
     }
 }
@@ -165,11 +176,58 @@ fun TopBanner() {
     }
 }
 
+@Composable
+fun CategoryList() {
+
+    val scrollState = rememberScrollState()
+
+    Row(
+        modifier = Modifier
+            .horizontalScroll(scrollState)
+            .padding(10.dp)
+    ) {
+        val itemList = listOf(
+            "Item1",
+            "Item2",
+            "Item3",
+            "Item4",
+            "Item5"
+        )
+
+        val iconList = listOf(
+            Icons.Default.Favorite,
+            Icons.Default.ArrowBack,
+            Icons.Default.ShoppingCart,
+            Icons.Default.List,
+            Icons.Default.Phone
+        )
+
+        itemList.forEachIndexed { index, item ->
+            Column(
+                modifier = Modifier
+                    .padding(end = 20.dp)
+                    .width(100.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Log.d("index1", index.toString())
+                Log.d("index2", iconList.size.toString())
+                Log.d("index3", (index % iconList.size).toString())
+                Icon(imageVector = iconList[index % iconList.size], contentDescription = null)
+                Text(text = item)
+                Spacer(modifier = Modifier.padding(20.dp))
+                Icon(imageVector = iconList[index % iconList.size], contentDescription = null)
+                Text(text = item)
+            }
+        }
+
+    }
+
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     CoupangExTheme {
         CoupangEx()
-
     }
 }
